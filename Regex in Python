@@ -1,0 +1,135 @@
+#learning regular expressions module/library in python
+#importing regular expressions into my file
+import re
+
+#raw string vs actual string
+print(p := r"\n\n Hello World! \t")
+print(l := "\n\n Hello \t World!")
+
+
+#example strings
+text = 'abcdefghijklmnopqrstuvwxyz'
+text_to_search = '''
+abcdefghijklmnopqrstuvwxyz
+ABCDEFGHIJKLMNOPQRSTUVWXYZ
+1234567890
+'''
+#find matches in example strings
+pattern = re.compile(r'defgh')
+matches = pattern.finditer(text)
+for match in matches:
+    print(match)
+
+
+#Metacharacters that need to be escaped
+#. ^ $ * + ? { } [ ] \ | ( ) 
+
+#example : to find a website name like "www.google.com"
+pattern2 = re.compile(r"\b")
+
+match2 = pattern2.finditer(l)
+for m in match2:
+    print(m)
+
+a = "Ha HaHa"
+p = re.compile(r"\bH")
+matches1 = p.finditer(a)
+for t in matches1:
+    print(t)
+
+sentence = "Start Start and End End"
+#using special characters like carat and dollar sign (^ and $)
+check = re.compile(r"^Start")
+check_end = re.compile(r"End$")
+a = check.finditer(sentence)
+b = check_end.finditer(sentence)
+for i in a:
+    print(i)
+for i in b:
+    print(i)
+
+
+#match only phone numbers that have are separated by '-' or '.'
+pattern_phone = re.compile(r"\d\d\d[-.]\d\d\d[-.]\d\d\d\d")
+
+string_to_match = "123-456-7890 123.456.7890 123*456*7890"
+matching = pattern_phone.finditer(string_to_match)
+for match in matching:
+    print(match)
+
+#match all three letter words ending in 'at' but not beginning with 'b'
+
+pat = re.compile(r"[^bA-Z0-9]at")
+str1 = """cat bat fat dat pat"""
+matchings = pat.finditer(str1)
+for m in matchings:
+    print(m)
+#Every male person in the name list
+wordpattern = re.compile(r"M[Rr]\.?\s\w*")
+names = "Mr. Scott MR T Mr. Johnson Ms. Angela Mrs. Johnson Mrs "
+
+m = wordpattern.finditer(names)
+for i in m:
+    print(i)
+
+print(names[10:14])
+
+
+#Every female in the name string
+wp = re.compile(r"[Mm]r?s\.?\s\w*")
+
+m1 = wp.finditer(names)
+for i in m1:
+    print(i)
+
+#Every male and female in the name string
+
+wp1 = re.compile(r"(Mr|Ms|Mrs)\.? \w*")
+mwp1 = wp1.finditer(names)
+for m in mwp1:
+    print(m)
+
+
+#Try matching email addresses
+
+email_pattern = re.compile(r"[a-zA-Z0-9-.]+@[a-zA-Z0-9-.]+\.[a-zA-Z0-9]{3}\s")
+
+
+emails = """
+eqofriendly@gmail.com
+programming.takes.time.and.practice@yahoo.com
+thiswontworkforsureinoutput@notanemailaddress.comi
+"""
+
+email_match = email_pattern.finditer(emails)
+for match in email_match:
+    print(match)
+
+
+#matching for urls
+
+urls = """
+https://www.google.com
+http://www.nasa.gov
+https://yahoo.com
+https://wwww.thiswontbematched.com"""
+
+url_pattern = re.compile(r"https?://(www\.)?\w+\.\w{3}\s")
+
+url_matches = url_pattern.finditer(urls)
+for match in url_matches:
+    print(match.group)
+
+
+url_pattern_grouping = re.compile(r"https?://(www\.)?(\w+)\.(\w{3})\s")
+
+url_grouping_matches = url_pattern_grouping.finditer(urls)
+for match in url_grouping_matches:
+    print(match.group(1))
+    print(match.group(2))
+    print(match.group(3))
+
+#making substrings
+
+url_sub = url_pattern_grouping.sub(r"\2\3", urls)
+print(url_sub)

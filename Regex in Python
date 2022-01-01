@@ -133,3 +133,15 @@ for match in url_grouping_matches:
 
 url_sub = url_pattern_grouping.sub(r"\2\3", urls)
 print(url_sub)
+
+
+
+m1 = pattern.findall(text_to_search) 
+#m1 returns a list of tuples for all groups in the pattern (the pattern must have groups), else it will return None / null (in Java or C++)
+
+
+m2 = pattern.match(text_to_search)
+#m2 returns something if text_to_search starts with pattern -> MUST START WITH PATTERN.
+
+m3 = pattern.search(text_to_search)
+#m3 returns the first instance in the text of the pattern.
